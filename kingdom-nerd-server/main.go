@@ -3,6 +3,7 @@ package main
 //imports for routes
 import (
 	"net/http"
+	"os"
 	"server/api/routes"
 
 	"github.com/gorilla/mux"
@@ -42,6 +43,10 @@ func main() {
 	}
 
 	handler := cors.Default().Handler(router)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8000"
+	}
 	// Start the server
-	http.ListenAndServe(":8000", handler)
+	http.ListenAndServe("0.0.0.0:"+port, handler)
 }
